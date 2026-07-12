@@ -1,0 +1,32 @@
+insert into public.activities (id, slug, name_ar, name_en, type, logo_url, is_published)
+values ('10000000-0000-4000-8000-000000000001', 'touch-furniture', 'تاتش فرنتشر', 'Touch Furniture', 'furniture', '/brand/touch-logo.svg', true)
+on conflict (id) do update set name_ar = excluded.name_ar, name_en = excluded.name_en, logo_url = excluded.logo_url, is_published = excluded.is_published;
+
+insert into public.activity_settings (activity_id, whatsapp_number, address_ar, accent_primary, accent_secondary)
+values ('10000000-0000-4000-8000-000000000001', '201145085454', 'كفر الدوار، طريق إسكندرية الزراعي، بجوار قاعة البرنسيسة، محافظة البحيرة.', '#6d4c3d', '#b18b57')
+on conflict (activity_id) do update set whatsapp_number = excluded.whatsapp_number, address_ar = excluded.address_ar;
+
+insert into public.collections (id, activity_id, slug, name_ar, name_en, description_ar, cover_url, sort_order, is_published) values
+('20000000-0000-4000-8000-000000000001','10000000-0000-4000-8000-000000000001','kids-rooms','غرف أطفال','Kids Rooms','مساحات مرحة وهادئة تنمو مع أطفالك، بخامات عملية وتفاصيل آمنة.','/demo/collection-kids.webp',1,true),
+('20000000-0000-4000-8000-000000000002','10000000-0000-4000-8000-000000000001','master-bedrooms','غرف نوم كبار','Master Bedrooms','غرف نوم متوازنة تمنحك هدوء الفندق ودفء البيت في وقت واحد.','/demo/collection-master.webp',2,true),
+('20000000-0000-4000-8000-000000000003','10000000-0000-4000-8000-000000000001','salons','صالونات','Salons','حضور كلاسيكي أخف، بخطوط أنيقة وأقمشة مريحة للمناسبات اليومية.','/demo/collection-salons.webp',3,true),
+('20000000-0000-4000-8000-000000000004','10000000-0000-4000-8000-000000000001','dining-rooms','سفرة','Dining Rooms','طاولات تجمع العائلة وتمنح غرفة الطعام حضوراً واضحاً دون مبالغة.','/demo/collection-dining.webp',4,true),
+('20000000-0000-4000-8000-000000000005','10000000-0000-4000-8000-000000000001','living-rooms','انتريهات','Living Rooms','راحة يومية بتكوينات خفيفة وخامات تتحمل الاستخدام الحقيقي.','/demo/collection-living.webp',5,true),
+('20000000-0000-4000-8000-000000000006','10000000-0000-4000-8000-000000000001','sectionals','ركنة','Sectionals','ركنات مرنة تستفيد من المساحة وتبقي الجلسة مفتوحة ومريحة.','/demo/collection-sectional.webp',6,true)
+on conflict (id) do update set name_ar=excluded.name_ar, name_en=excluded.name_en, description_ar=excluded.description_ar, cover_url=excluded.cover_url, sort_order=excluded.sort_order, is_published=excluded.is_published;
+
+insert into public.rooms (id, collection_id, slug, name_ar, description_ar, price, currency, stock, cover_url, gallery_urls, sort_order, is_published) values
+('30000000-0000-4000-8000-000000000001','20000000-0000-4000-8000-000000000001','cloud-kids-room','غرفة كلاود','تكوين لطيف بدرجات محايدة، سرير آمن ووحدات تخزين سهلة الوصول.',28500,'ج.م',4,'/demo/room-kids-cloud.webp',array['/demo/room-kids-cloud.webp','/demo/room-kids-oak.webp'],1,true),
+('30000000-0000-4000-8000-000000000002','20000000-0000-4000-8000-000000000001','oak-kids-room','غرفة أوك الصغيرة','خشب طبيعي فاتح مع تفاصيل عملية ومكتب مدمج للمذاكرة.',31900,'ج.م',7,'/demo/room-kids-oak.webp',array['/demo/room-kids-oak.webp','/demo/room-kids-cloud.webp'],2,true),
+('30000000-0000-4000-8000-000000000003','20000000-0000-4000-8000-000000000002','linen-master-room','غرفة لينن','قماش كتاني هادئ، ظهر سرير عريض وإضاءة جانبية تمنح الغرفة دفئاً ناعماً.',49800,'ج.م',2,'/demo/room-master-linen.webp',array['/demo/room-master-linen.webp','/demo/room-master-walnut.webp'],1,true),
+('30000000-0000-4000-8000-000000000004','20000000-0000-4000-8000-000000000002','walnut-master-room','غرفة وولنت','قشرة جوز دافئة وخطوط مستقيمة لمساحة نوم عملية وفخمة بهدوء.',55750,'ج.م',5,'/demo/room-master-walnut.webp',array['/demo/room-master-walnut.webp','/demo/room-master-linen.webp'],2,true),
+('30000000-0000-4000-8000-000000000005','20000000-0000-4000-8000-000000000003','classic-salon','صالون رويال','تنجيد فاتح وتفاصيل كلاسيكية مخففة تناسب الاستقبال العصري.',46500,'ج.م',0,'/demo/room-salon-classic.webp',array['/demo/room-salon-classic.webp','/demo/room-salon-olive.webp'],1,true),
+('30000000-0000-4000-8000-000000000006','20000000-0000-4000-8000-000000000003','olive-salon','صالون أوليف','لون زيتوني مطفأ مع أخشاب داكنة وتكوين مفتوح ومريح.',43200,'ج.م',8,'/demo/room-salon-olive.webp',array['/demo/room-salon-olive.webp','/demo/room-salon-classic.webp'],2,true),
+('30000000-0000-4000-8000-000000000007','20000000-0000-4000-8000-000000000004','marble-dining','سفرة ماربل','سطح رخامي هادئ مع ستة مقاعد مريحة وتفاصيل معدنية بسيطة.',38900,'ج.م',3,'/demo/room-dining-marble.webp',array['/demo/room-dining-marble.webp','/demo/room-dining-oak.webp'],1,true),
+('30000000-0000-4000-8000-000000000008','20000000-0000-4000-8000-000000000004','oak-dining','سفرة أوك','طاولة خشب طبيعي بملمس واضح ومقاعد منسوجة للاستخدام اليومي.',34200,'ج.م',9,'/demo/room-dining-oak.webp',array['/demo/room-dining-oak.webp','/demo/room-dining-marble.webp'],2,true),
+('30000000-0000-4000-8000-000000000009','20000000-0000-4000-8000-000000000005','sand-living','انتريه ساند','درجات رملية ووسائد عميقة تناسب الجلسات الطويلة وتفتح المساحة بصرياً.',36700,'ج.م',12,'/demo/room-living-sand.webp',array['/demo/room-living-sand.webp','/demo/room-living-navy.webp'],1,true),
+('30000000-0000-4000-8000-000000000010','20000000-0000-4000-8000-000000000005','navy-living','انتريه نيفي','أزرق عميق مع أرجل خشبية خفيفة وشخصية واضحة دون ازدحام.',39400,'ج.م',1,'/demo/room-living-navy.webp',array['/demo/room-living-navy.webp','/demo/room-living-sand.webp'],2,true),
+('30000000-0000-4000-8000-000000000011','20000000-0000-4000-8000-000000000006','warm-sectional','ركنة وورم','ركنة واسعة بلون دافئ، شازلونج مريح ونسب مناسبة لغرفة المعيشة.',41200,'ج.م',6,'/demo/room-sectional-warm.webp',array['/demo/room-sectional-warm.webp','/demo/room-sectional-graphite.webp'],1,true),
+('30000000-0000-4000-8000-000000000012','20000000-0000-4000-8000-000000000006','graphite-sectional','ركنة جرافيت','قماش رمادي عملي وتكوين مرن للمساحات الكبيرة والمتوسطة.',43800,'ج.م',4,'/demo/room-sectional-graphite.webp',array['/demo/room-sectional-graphite.webp','/demo/room-sectional-warm.webp'],2,true)
+on conflict (id) do update set name_ar=excluded.name_ar, description_ar=excluded.description_ar, price=excluded.price, stock=excluded.stock, cover_url=excluded.cover_url, gallery_urls=excluded.gallery_urls, sort_order=excluded.sort_order, is_published=excluded.is_published;
+
