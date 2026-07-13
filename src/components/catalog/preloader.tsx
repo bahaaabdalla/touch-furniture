@@ -1,25 +1,32 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const KEY = "touch-furniture:intro-seen:v1";
+const KEY = "touch-furniture:intro-seen:v2";
 
-export function Preloader() {
-  const reduceMotion = useReducedMotion();
-  const [visible, setVisible] = useState(false);
+export function Preloader({ nameEn = "TOUCH FURNITURE" }: { nameEn?: string }) {
+  // Start visible so the intro is guaranteed to paint on a fresh load.
+  const [visible, setVisible] = useState(true);
+  const [reduce, setReduce] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem(KEY)) return;
+    const prefersReduce =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    setReduce(Boolean(prefersReduce));
+
+    // Already shown this browser session → skip immediately, no flash held.
+    if (sessionStorage.getItem(KEY)) {
+      setVisible(false);
+      return;
+    }
     sessionStorage.setItem(KEY, "1");
-    const revealTimer = window.setTimeout(() => setVisible(true), 0);
-    const timer = window.setTimeout(() => setVisible(false), reduceMotion ? 120 : 950);
-    return () => {
-      window.clearTimeout(revealTimer);
-      window.clearTimeout(timer);
-    };
-  }, [reduceMotion]);
+
+    const hold = prefersReduce ? 200 : 1150;
+    const timer = window.setTimeout(() => setVisible(false), hold);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   return (
     <AnimatePresence>
@@ -28,18 +35,27 @@ export function Preloader() {
           className="fixed inset-0 z-[100] grid place-items-center bg-[#f7f1e8]"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: reduceMotion ? 0 : 0.38 }}
+          transition={{ duration: reduce ? 0 : 0.42 }}
           aria-hidden="true"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: reduceMotion ? 0 : 0.48, ease: "easeOut" }}
-            className="relative w-48"
-          >
-            <div className="absolute inset-8 rounded-full bg-gold/30 blur-3xl" />
-            <Image src="/brand/touch-logo.svg" width={900} height={260} alt="" priority className="relative h-auto w-full" />
-          </motion.div>
+          <div className="relative flex flex-col items-center px-8 text-center">
+            <span
+              className="absolute -inset-x-10 -inset-y-6 rounded-full bg-gold/20 blur-3xl"
+              aria-hidden="true"
+            />
+            <span
+              className={`brand-name relative text-[2.75rem] leading-tight text-ink sm:text-7xl ${
+                reduce ? "" : "brand-glow"
+              }`}
+              lang="ar"
+              dir="rtl"
+            >
+              تَاتْش فِرْنِتْشَر
+            </span>
+            <span className="latin-display relative mt-2 text-xl uppercase tracking-[.34em] text-gold sm:mt-3 sm:text-3xl sm:tracking-[.42em]">
+              {nameEn}
+            </span>
+          </div>
         </motion.div>
       ) : null}
     </AnimatePresence>

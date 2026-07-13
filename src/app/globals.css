@@ -31,8 +31,15 @@ body {
     var(--ivory);
   color: var(--ink);
   font-family: var(--font-tajawal), "Tajawal", Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.003em;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* Headings feel present and confident, never thin */
+h1, h2, h3 { font-weight: 800; letter-spacing: -0.01em; }
+h4, h5, h6 { font-weight: 700; }
 
 a { color: inherit; text-decoration: none; }
 button, input, textarea, select { font: inherit; }
@@ -40,12 +47,50 @@ button, a { -webkit-tap-highlight-color: transparent; }
 img { user-select: none; }
 ::selection { background: color-mix(in srgb, var(--accent-secondary) 34%, transparent); }
 
-.latin-display { font-family: var(--font-cormorant), Georgia, serif; }
+.latin-display { font-family: var(--font-cormorant), Georgia, serif; font-weight: 600; }
+/* Distinctive geometric Kufi — section titles, category chips */
+.kufi-display { font-family: var(--font-reem), var(--font-tajawal), sans-serif; font-weight: 700; }
+/* Classical Naskh — the voweled brand name */
+.brand-name { font-family: var(--font-amiri), "Times New Roman", serif; font-weight: 700; }
 .focus-ring:focus-visible { outline: 2px solid var(--accent-secondary); outline-offset: 4px; }
 .hairline { border-color: var(--line); }
 .page-shadow { box-shadow: 0 28px 70px rgba(55, 40, 28, 0.12); }
 .soft-shadow { box-shadow: 0 18px 50px rgba(55, 40, 28, 0.09); }
 .text-balance { text-wrap: balance; }
+
+/* Hide scrollbars on horizontal mobile strips */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Simple elegant frame for collection covers */
+.cover-frame {
+  padding: 10px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 50px rgba(55, 40, 28, 0.09);
+}
+.cover-frame > * { outline: 1px solid color-mix(in srgb, var(--accent-secondary) 45%, transparent); outline-offset: -1px; }
+
+/* Category chip */
+.cat-chip {
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 80%, transparent);
+  transition: border-color .25s ease, background .25s ease, color .25s ease, transform .25s ease;
+}
+.cat-chip:hover {
+  border-color: var(--accent-secondary);
+  background: var(--paper);
+  color: var(--accent-primary);
+  transform: translateY(-2px);
+}
+
+/* Preloader brand glow */
+@keyframes brand-glow {
+  0% { opacity: .35; text-shadow: 0 0 0 transparent; }
+  45% { opacity: 1; text-shadow: 0 6px 34px color-mix(in srgb, var(--accent-secondary) 60%, transparent); }
+  100% { opacity: .85; text-shadow: 0 3px 18px color-mix(in srgb, var(--accent-secondary) 35%, transparent); }
+}
+.brand-glow { animation: brand-glow 1.05s ease-in-out both; }
 
 @keyframes stock-pulse {
   0%, 100% { box-shadow: 0 0 0 0 currentColor; opacity: .9; }

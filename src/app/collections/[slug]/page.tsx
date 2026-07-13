@@ -26,7 +26,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
       <section className="mx-auto max-w-[1380px] px-5 pb-12 pt-12 sm:px-8 lg:px-12">
         <Link href="/" className="focus-ring text-sm text-muted hover:text-ink">العودة إلى المجموعات</Link>
         <div className="mt-10 grid items-end gap-8 border-b hairline pb-10 lg:grid-cols-[1fr_auto]">
-          <div><p className="latin-display text-xl text-gold">{collection.nameEn}</p><h1 className="mt-3 text-5xl font-light sm:text-7xl">{collection.nameAr}</h1></div>
+          <div><p className="latin-display text-xl text-gold">{collection.nameEn}</p><h1 className="kufi-display mt-3 text-5xl sm:text-7xl">{collection.nameAr}</h1></div>
           <p className="max-w-xl leading-8 text-muted">{collection.descriptionAr}</p>
         </div>
       </section>

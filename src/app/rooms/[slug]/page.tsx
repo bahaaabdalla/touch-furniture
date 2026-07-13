@@ -33,7 +33,7 @@ export default async function RoomPage({ params }: { params: Promise<{ slug: str
           <RoomGallery images={[room.coverUrl, ...room.galleryUrls]} name={room.nameAr} />
           <aside className="lg:sticky lg:top-8">
             <p className="latin-display text-xl text-gold">{room.collection?.nameEn ?? "Touch Collection"}</p>
-            <h1 className="mt-3 text-5xl font-light leading-tight sm:text-6xl">{room.nameAr}</h1>
+            <h1 className="kufi-display mt-3 text-5xl leading-tight sm:text-6xl">{room.nameAr}</h1>
             <p className="mt-6 text-2xl font-medium text-accent">{formatPrice(room.price, room.currency)}</p>
             <div className="mt-6"><StockStatus stock={room.stock} /></div>
             <div className="mt-9 border-y hairline py-8"><p className="whitespace-pre-line text-lg leading-9 text-muted">{room.descriptionAr}</p></div>
