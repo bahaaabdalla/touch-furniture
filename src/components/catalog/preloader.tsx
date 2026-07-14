@@ -6,22 +6,22 @@ import { useEffect, useState } from "react";
 const KEY = "touch-furniture:intro-seen:v2";
 
 export function Preloader({ nameEn = "TOUCH FURNITURE" }: { nameEn?: string }) {
-  // Start visible so the intro is guaranteed to paint on a fresh load.
-  const [visible, setVisible] = useState(true);
+  // Hidden by default. Only the very first page view in a browser session shows
+  // the intro; internal navigation (opening a collection/room) never re-triggers
+  // it, so there's no flash or "freeze" feel while browsing.
+  const [visible, setVisible] = useState(false);
   const [reduce, setReduce] = useState(false);
 
   useEffect(() => {
+    // Already shown this session → never show again (prevents the navigation flash).
+    if (sessionStorage.getItem(KEY)) return;
+
     const prefersReduce =
       typeof window !== "undefined" &&
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     setReduce(Boolean(prefersReduce));
-
-    // Already shown this browser session → skip immediately, no flash held.
-    if (sessionStorage.getItem(KEY)) {
-      setVisible(false);
-      return;
-    }
     sessionStorage.setItem(KEY, "1");
+    setVisible(true);
 
     const hold = prefersReduce ? 200 : 1500;
     const timer = window.setTimeout(() => setVisible(false), hold);
