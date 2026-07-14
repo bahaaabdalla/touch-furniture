@@ -32,19 +32,19 @@ export function Preloader({ nameEn = "TOUCH FURNITURE" }: { nameEn?: string }) {
     <AnimatePresence>
       {visible ? (
         <motion.div
-          className="fixed inset-0 z-[100] grid place-items-center bg-ivory/50 backdrop-blur-2xl"
+          className="fixed inset-0 z-[100] grid place-items-center bg-ivory/85 px-6 backdrop-blur-2xl"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: reduce ? 0 : 0.42 }}
           aria-hidden="true"
         >
-          <div className="relative flex flex-col items-center px-8 text-center">
+          <div className="relative flex w-full max-w-full flex-col items-center text-center">
             <span
-              className="absolute -inset-x-10 -inset-y-6 rounded-full bg-gold/20 blur-3xl"
+              className="absolute -inset-x-8 -inset-y-6 rounded-full bg-gold/25 blur-3xl"
               aria-hidden="true"
             />
             <span
-              className={`brand-name relative text-[2.75rem] leading-tight text-ink sm:text-7xl ${
+              className={`brand-name relative block w-full whitespace-nowrap text-[2rem] leading-tight text-ink sm:text-7xl ${
                 reduce ? "" : "brand-glow"
               }`}
               lang="ar"
@@ -52,7 +52,7 @@ export function Preloader({ nameEn = "TOUCH FURNITURE" }: { nameEn?: string }) {
             >
               تَاتْش فِرْنِتْشَر
             </span>
-            <span className="latin-display relative mt-2 text-xl uppercase tracking-[.34em] text-gold sm:mt-3 sm:text-3xl sm:tracking-[.42em]">
+            <span className="latin-display relative mt-2 text-base uppercase tracking-[.3em] text-gold sm:mt-3 sm:text-3xl sm:tracking-[.42em]">
               {nameEn}
             </span>
           </div>

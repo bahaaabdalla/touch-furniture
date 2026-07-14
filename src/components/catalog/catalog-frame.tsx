@@ -29,7 +29,7 @@ export async function CatalogFrame({
     <div style={style} className="min-h-screen">
       <Preloader nameEn={activity.nameEn} />
 
-      <header className="sticky top-0 z-40 border-b hairline bg-ivory/85 backdrop-blur">
+      <header className="z-40 border-b hairline bg-ivory/85 backdrop-blur sm:sticky sm:top-0">
         {/* Row 1 — brand + contact, compact */}
         <div className="mx-auto flex max-w-[1480px] items-center justify-between gap-4 px-5 py-2.5 sm:px-8 lg:px-12">
           <Link href="/" className="focus-ring flex flex-col rounded-sm leading-none" aria-label="تاتش فرنتشر — الرئيسية">
@@ -55,33 +55,35 @@ export async function CatalogFrame({
           </div>
         </div>
 
-        {/* Row 2 — links + category chips in one line (scrolls on mobile, wraps on desktop) */}
+        {/* Row 2 — primary links, then category tabs (2 per row on mobile, inline on desktop) */}
         <div className="border-t hairline bg-paper/40">
-          <div className="mx-auto max-w-[1480px] px-5 py-1.5 sm:px-8 sm:py-2 lg:px-12">
-            <div className="no-scrollbar flex items-center gap-2.5 overflow-x-auto whitespace-nowrap sm:flex-wrap sm:gap-3 sm:overflow-visible sm:whitespace-normal">
+          <div className="mx-auto max-w-[1480px] px-5 py-2 sm:px-8 lg:px-12">
+            <div className="flex items-center gap-4 text-sm font-bold">
               <Link
                 href="/#about"
-                className="focus-ring shrink-0 rounded-sm text-sm font-bold transition-colors hover:text-accent"
+                className="focus-ring rounded-sm transition-colors hover:text-accent"
               >
                 من نحن
               </Link>
               <Link
                 href="/#contact"
-                className="focus-ring shrink-0 rounded-sm text-sm font-bold transition-colors hover:text-accent"
+                className="focus-ring rounded-sm transition-colors hover:text-accent"
               >
                 تواصل معنا
               </Link>
-              <span className="mx-0.5 h-5 w-px shrink-0 bg-[var(--line)]" aria-hidden="true" />
-              {collections.map((collection) => (
-                <Link
-                  key={collection.id}
-                  href={`/collections/${collection.slug}`}
-                  className="cat-chip kufi-display focus-ring inline-flex shrink-0 rounded-full px-3.5 py-1 text-[.8rem] text-ink sm:px-4 sm:py-1.5 sm:text-sm"
-                >
-                  {collection.nameAr}
-                </Link>
-              ))}
             </div>
+            <ul className="mt-2 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-2.5">
+              {collections.map((collection) => (
+                <li key={collection.id}>
+                  <Link
+                    href={`/collections/${collection.slug}`}
+                    className="cat-chip kufi-display focus-ring flex w-full items-center justify-center rounded-full px-3 py-1.5 text-[.8rem] text-ink sm:w-auto sm:px-4 sm:text-sm"
+                  >
+                    {collection.nameAr}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </header>

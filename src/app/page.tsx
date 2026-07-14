@@ -13,9 +13,9 @@ export default async function HomePage() {
 
   return (
     <CatalogFrame activity={activity}>
-      <section className="mx-auto max-w-[1480px] px-5 pt-6 sm:px-8 lg:px-12">
+      <section className="mx-auto w-full max-w-[1480px] px-4 pt-5 sm:px-8 sm:pt-6 lg:px-12">
         <div className="cover-frame">
-          <div className="relative aspect-[16/9] min-h-[220px] overflow-hidden bg-stone-200 sm:aspect-[21/8]">
+          <div className="relative h-[260px] w-full overflow-hidden bg-stone-200 sm:h-auto sm:aspect-[21/8]">
             <Image
               src={hero}
               alt="مجموعة أثاث من تاتش فرنتشر"
@@ -25,9 +25,9 @@ export default async function HomePage() {
               sizes="100vw"
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/25 to-transparent" />
-            <div className="absolute inset-y-0 right-0 flex max-w-md flex-col justify-center gap-3 p-6 text-right sm:p-10 lg:p-14">
-              <p className="latin-display text-xs tracking-[.28em] text-white/85 sm:text-sm">TOUCH FURNITURE</p>
+            <div className="absolute inset-0 bg-gradient-to-l from-black/70 via-black/35 to-black/5" />
+            <div className="absolute inset-y-0 right-0 flex w-full max-w-md flex-col justify-center gap-2.5 p-5 text-right sm:gap-3 sm:p-10 lg:p-14">
+              <p className="latin-display text-[.7rem] tracking-[.28em] text-white/85 sm:text-sm">TOUCH FURNITURE</p>
               <h1 className="text-2xl font-extrabold leading-tight text-white sm:text-4xl">
                 أثاث له حضور، وبيت يشبهك.
               </h1>
@@ -36,12 +36,12 @@ export default async function HomePage() {
               </p>
               <Link
                 href="#collections"
-                className="focus-ring mt-1 inline-flex w-fit items-center gap-3 rounded-full bg-paper/95 px-5 py-2.5 text-sm font-bold text-ink transition hover:bg-paper"
+                className="focus-ring mt-1 inline-flex w-fit items-center gap-3 rounded-full bg-paper/95 px-4 py-2 text-sm font-bold text-ink transition hover:bg-paper sm:px-5 sm:py-2.5"
               >
                 اكتشف المجموعات <span aria-hidden="true">←</span>
               </Link>
             </div>
-            <p className="absolute bottom-4 left-4 rounded-full bg-paper/90 px-4 py-1.5 text-xs font-bold backdrop-blur">
+            <p className="absolute bottom-3 left-3 rounded-full bg-paper/90 px-3.5 py-1 text-[.7rem] font-bold backdrop-blur sm:bottom-4 sm:left-4 sm:px-4 sm:py-1.5 sm:text-xs">
               كتالوج 2026
             </p>
           </div>
