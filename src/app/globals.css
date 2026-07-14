@@ -32,14 +32,15 @@ body {
   color: var(--ink);
   font-family: var(--font-tajawal), "Tajawal", Arial, sans-serif;
   font-weight: 500;
-  letter-spacing: -0.003em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Headings feel present and confident, never thin */
-h1, h2, h3 { font-weight: 800; letter-spacing: -0.01em; }
-h4, h5, h6 { font-weight: 700; }
+/* Headings feel present and confident, never thin.
+   Arabic script must never use negative letter-spacing — it breaks joining. */
+h1, h2, h3 { font-weight: 800; letter-spacing: normal; }
+h4, h5, h6 { font-weight: 700; letter-spacing: normal; }
+.kufi-display, .brand-name { letter-spacing: normal; word-spacing: 0.02em; }
 
 a { color: inherit; text-decoration: none; }
 button, input, textarea, select { font: inherit; }

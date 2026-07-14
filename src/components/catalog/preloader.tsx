@@ -23,7 +23,7 @@ export function Preloader({ nameEn = "TOUCH FURNITURE" }: { nameEn?: string }) {
     }
     sessionStorage.setItem(KEY, "1");
 
-    const hold = prefersReduce ? 200 : 2150;
+    const hold = prefersReduce ? 200 : 1500;
     const timer = window.setTimeout(() => setVisible(false), hold);
     return () => window.clearTimeout(timer);
   }, []);
@@ -32,7 +32,7 @@ export function Preloader({ nameEn = "TOUCH FURNITURE" }: { nameEn?: string }) {
     <AnimatePresence>
       {visible ? (
         <motion.div
-          className="fixed inset-0 z-[100] grid place-items-center bg-[#f7f1e8]"
+          className="fixed inset-0 z-[100] grid place-items-center bg-ivory/50 backdrop-blur-2xl"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: reduce ? 0 : 0.42 }}

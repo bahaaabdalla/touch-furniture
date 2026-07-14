@@ -31,7 +31,7 @@ export async function CatalogFrame({
 
       <header className="sticky top-0 z-40 border-b hairline bg-ivory/85 backdrop-blur">
         {/* Row 1 — brand + contact, compact */}
-        <div className="mx-auto flex max-w-[1480px] items-center justify-between gap-4 px-5 py-3 sm:px-8 lg:px-12">
+        <div className="mx-auto flex max-w-[1480px] items-center justify-between gap-4 px-5 py-2.5 sm:px-8 lg:px-12">
           <Link href="/" className="focus-ring flex flex-col rounded-sm leading-none" aria-label="تاتش فرنتشر — الرئيسية">
             <span className="brand-name text-2xl text-ink sm:text-3xl">تاتش فِرنتشر</span>
             <span className="latin-display text-[.7rem] uppercase tracking-[.34em] text-gold sm:text-xs">
@@ -55,40 +55,32 @@ export async function CatalogFrame({
           </div>
         </div>
 
-        {/* Row 2 — primary links, then category chips beneath */}
+        {/* Row 2 — links + category chips in one line (scrolls on mobile, wraps on desktop) */}
         <div className="border-t hairline bg-paper/40">
-          <div className="mx-auto max-w-[1480px] px-5 py-2 sm:px-8 lg:px-12">
-            <div className="flex items-center gap-4 text-sm font-bold sm:hidden">
-              <Link className="focus-ring rounded-sm transition-colors hover:text-accent" href="/#about">
+          <div className="mx-auto max-w-[1480px] px-5 py-1.5 sm:px-8 sm:py-2 lg:px-12">
+            <div className="no-scrollbar flex items-center gap-2.5 overflow-x-auto whitespace-nowrap sm:flex-wrap sm:gap-3 sm:overflow-visible sm:whitespace-normal">
+              <Link
+                href="/#about"
+                className="focus-ring shrink-0 rounded-sm text-sm font-bold transition-colors hover:text-accent"
+              >
                 من نحن
               </Link>
-              <Link className="focus-ring rounded-sm transition-colors hover:text-accent" href="/#contact">
+              <Link
+                href="/#contact"
+                className="focus-ring shrink-0 rounded-sm text-sm font-bold transition-colors hover:text-accent"
+              >
                 تواصل معنا
               </Link>
-            </div>
-            <div className="flex items-center gap-3 sm:gap-4">
-              <nav className="hidden items-center gap-4 text-sm font-bold sm:flex">
-                <Link className="focus-ring rounded-sm transition-colors hover:text-accent" href="/#about">
-                  من نحن
+              <span className="mx-0.5 h-5 w-px shrink-0 bg-[var(--line)]" aria-hidden="true" />
+              {collections.map((collection) => (
+                <Link
+                  key={collection.id}
+                  href={`/collections/${collection.slug}`}
+                  className="cat-chip kufi-display focus-ring inline-flex shrink-0 rounded-full px-3.5 py-1 text-[.8rem] text-ink sm:px-4 sm:py-1.5 sm:text-sm"
+                >
+                  {collection.nameAr}
                 </Link>
-                <Link className="focus-ring rounded-sm transition-colors hover:text-accent" href="/#contact">
-                  تواصل معنا
-                </Link>
-                <span className="mx-1 h-5 w-px bg-[var(--line)]" aria-hidden="true" />
-              </nav>
-              {/* Chips: horizontal scroll strip on mobile, wraps on larger screens */}
-              <ul className="no-scrollbar mt-1.5 flex flex-1 items-center gap-2 overflow-x-auto whitespace-nowrap pb-0.5 sm:mt-0 sm:flex-wrap sm:overflow-visible sm:whitespace-normal sm:pb-0">
-                {collections.map((collection) => (
-                  <li key={collection.id} className="shrink-0">
-                    <Link
-                      href={`/collections/${collection.slug}`}
-                      className="cat-chip kufi-display focus-ring inline-flex rounded-full px-3.5 py-1.5 text-[.8rem] text-ink sm:px-4 sm:text-sm"
-                    >
-                      {collection.nameAr}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              ))}
             </div>
           </div>
         </div>
