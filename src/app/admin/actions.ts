@@ -128,7 +128,7 @@ export async function saveCollection(formData: FormData) {
     : await supabase.from("collections").insert(payload);
   if (result.error) fail(destination, "تعذر حفظ المجموعة. تأكد أن الرابط المختصر غير مستخدم.");
   if (oldCover && oldCover !== parsed.data.coverUrl) await removeUrls(supabase, [oldCover]);
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   redirect("/admin/collections");
 }
 
@@ -146,7 +146,7 @@ export async function deleteCollection(formData: FormData) {
   const { error } = await supabase.from("collections").delete().eq("id", id);
   if (error) fail("/admin/collections", "تعذر حذف المجموعة.");
   await removeUrls(supabase, urls);
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   redirect("/admin/collections");
 }
 
@@ -193,7 +193,7 @@ export async function saveRoom(formData: FormData) {
   if (result.error) fail(destination, "تعذر حفظ الغرفة. تأكد أن الرابط المختصر غير مستخدم.");
   const retained = new Set([parsed.data.coverUrl, ...parsed.data.galleryUrls]);
   await removeUrls(supabase, oldUrls.filter((url) => !retained.has(url)));
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   redirect("/admin/rooms");
 }
 
@@ -204,7 +204,7 @@ export async function updateStock(formData: FormData) {
   const { supabase } = await requireAdmin();
   const { error } = await supabase.from("rooms").update({ stock }).eq("id", id);
   if (error) fail("/admin/rooms", "تعذر تحديث المخزون.");
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   redirect("/admin/rooms");
 }
 
@@ -215,7 +215,7 @@ export async function deleteRoom(formData: FormData) {
   const { error } = await supabase.from("rooms").delete().eq("id", id);
   if (error) fail("/admin/rooms", "تعذر حذف الغرفة.");
   await removeUrls(supabase, [String(old.data?.cover_url ?? ""), ...((old.data?.gallery_urls as string[] | null) ?? [])]);
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   redirect("/admin/rooms");
 }
 
@@ -238,7 +238,7 @@ export async function saveSettings(formData: FormData) {
   if (activity.error || settings.error) fail("/admin/settings", "تعذر حفظ الإعدادات.");
   const oldLogo = String(old.data?.logo_url ?? "");
   if (oldLogo && oldLogo !== parsed.data.logoUrl) await removeUrls(supabase, [oldLogo]);
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   redirect("/admin/settings?saved=1");
 }
 

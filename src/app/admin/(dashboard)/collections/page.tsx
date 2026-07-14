@@ -7,6 +7,71 @@ import { requireAdmin } from "@/lib/supabase/auth";
 export default async function CollectionsAdminPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const [{ supabase }, params] = await Promise.all([requireAdmin(), searchParams]);
   const { data } = await supabase.from("collections").select("id, name_ar, name_en, slug, sort_order, is_published").order("sort_order");
-  return <div><div className="flex items-end justify-between gap-5"><div><p className="text-sm text-gold">المحتوى</p><h1 className="mt-2 text-4xl">المجموعات</h1></div><Link href="/admin/collections/new" className="rounded-full bg-ink px-6 py-3 text-white">مجموعة جديدة</Link></div><div className="mt-7"><ErrorBanner message={params.error} /></div><div className="mt-5 overflow-x-auto rounded-2xl bg-white soft-shadow"><table className="w-full min-w-[700px] text-right"><thead className="border-b hairline text-sm text-muted"><tr><th className="p-5">الاسم</th><th className="p-5">الرابط</th><th className="p-5">الترتيب</th><th className="p-5">الحالة</th><th className="p-5">الإجراءات</th></tr></thead><tbody className="divide-y hairline">{(data ?? []).map((item) => <tr key={item.id}><td className="p-5 font-medium">{item.name_ar}<span className="latin-display mr-2 text-muted">{item.name_en}</span></td><td className="p-5 text-sm text-muted" dir="ltr">{item.slug}</td><td className="p-5">{item.sort_order}</td><td className="p-5">{item.is_published ? "منشورة" : "مسودة"}</td><td className="p-5"><div className="flex gap-3"><Link href={`/admin/collections/${item.id}`} className="rounded-full border hairline px-4 py-2 text-sm">تعديل</Link><form action={deleteCollection}><input type="hidden" name="id" value={item.id} /><ConfirmButton message="سيتم حذف المجموعة وكل الغرف داخلها. هل أنت متأكد؟">حذف</ConfirmButton></form></div></td></tr>)}</tbody></table></div></div>;
+  const collections = data ?? [];
+  return (
+    <div>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="text-sm text-gold">المحتوى</p>
+          <h1 className="mt-2 text-3xl sm:text-4xl">المجموعات</h1>
+        </div>
+        <Link href="/admin/collections/new" className="rounded-full bg-ink px-6 py-3 text-sm text-white sm:text-base">+ مجموعة جديدة</Link>
+      </div>
+
+      <div className="mt-7">
+        <ErrorBanner message={params.error} />
+      </div>
+
+      {/* Mobile: cards */}
+      <div className="mt-5 space-y-4 lg:hidden">
+        {collections.map((item) => (
+          <div key={item.id} className="rounded-2xl bg-white p-5 soft-shadow">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-lg font-bold">{item.name_ar} <span className="latin-display text-sm text-muted">{item.name_en}</span></p>
+                <p className="text-xs text-muted" dir="ltr">{item.slug}</p>
+                <p className="mt-1 text-sm text-muted">الترتيب: {item.sort_order}</p>
+              </div>
+              <span className={`rounded-full px-3 py-1 text-xs ${item.is_published ? "bg-emerald-50 text-emerald-700" : "bg-stone-100 text-muted"}`}>
+                {item.is_published ? "منشورة" : "مسودة"}
+              </span>
+            </div>
+            <div className="mt-4 flex gap-3 border-t hairline pt-4">
+              <Link href={`/admin/collections/${item.id}`} className="flex-1 rounded-full border hairline py-2 text-center text-sm">تعديل</Link>
+              <form action={deleteCollection} className="flex-1">
+                <input type="hidden" name="id" value={item.id} />
+                <ConfirmButton message="سيتم حذف المجموعة وكل الغرف داخلها. هل أنت متأكد؟" className="w-full">حذف</ConfirmButton>
+              </form>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop: table */}
+      <div className="mt-5 hidden overflow-x-auto rounded-2xl bg-white soft-shadow lg:block">
+        <table className="w-full text-right">
+          <thead className="border-b hairline text-sm text-muted">
+            <tr><th className="p-5">الاسم</th><th className="p-5">الرابط</th><th className="p-5">الترتيب</th><th className="p-5">الحالة</th><th className="p-5">الإجراءات</th></tr>
+          </thead>
+          <tbody className="divide-y hairline">
+            {collections.map((item) => (
+              <tr key={item.id}>
+                <td className="p-5 font-medium">{item.name_ar}<span className="latin-display mr-2 text-muted">{item.name_en}</span></td>
+                <td className="p-5 text-sm text-muted" dir="ltr">{item.slug}</td>
+                <td className="p-5">{item.sort_order}</td>
+                <td className="p-5">{item.is_published ? "منشورة" : "مسودة"}</td>
+                <td className="p-5">
+                  <div className="flex gap-3">
+                    <Link href={`/admin/collections/${item.id}`} className="rounded-full border hairline px-4 py-2 text-sm">تعديل</Link>
+                    <form action={deleteCollection}><input type="hidden" name="id" value={item.id} /><ConfirmButton message="سيتم حذف المجموعة وكل الغرف داخلها. هل أنت متأكد؟">حذف</ConfirmButton></form>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 

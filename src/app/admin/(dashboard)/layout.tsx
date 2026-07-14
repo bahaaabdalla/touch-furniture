@@ -11,7 +11,12 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <nav className="mt-8 flex gap-2 overflow-x-auto lg:flex-col">
           {[['/admin','نظرة عامة'],['/admin/collections','المجموعات'],['/admin/rooms','الغرف والمخزون'],['/admin/settings','الإعدادات']].map(([href,label]) => <Link key={href} href={href} className="whitespace-nowrap rounded-xl px-4 py-3 text-sm transition hover:bg-stone-100">{label}</Link>)}
         </nav>
-        <div className="mt-8 flex items-center gap-3 lg:mt-16 lg:flex-col lg:items-stretch"><Link href="/" target="_blank" rel="noopener noreferrer" className="rounded-full border hairline px-4 py-2 text-center text-sm">عرض الكتالوج</Link><form action={logoutAction}><button className="w-full rounded-full px-4 py-2 text-sm text-red-700">تسجيل الخروج</button></form></div>
+        <div className="mt-8 flex items-center gap-3 lg:mt-16 lg:flex-col lg:items-stretch">
+          <Link href="/" target="_blank" rel="noopener noreferrer" className="rounded-full border hairline px-4 py-2 text-center text-sm transition hover:bg-stone-100">↗ عرض الكتالوج</Link>
+          <form action={logoutAction} className="w-full">
+            <button className="w-full rounded-full border border-red-300 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100">⎋ تسجيل الخروج</button>
+          </form>
+        </div>
       </aside>
       <main className="min-w-0 p-5 sm:p-8 lg:p-10">{children}</main>
     </div>
