@@ -13,36 +13,38 @@ export default async function HomePage() {
 
   return (
     <CatalogFrame activity={activity}>
-      <section className="mx-auto grid max-w-[1480px] items-center gap-10 px-5 pb-14 pt-10 sm:px-8 lg:grid-cols-[.78fr_1.22fr] lg:px-12">
-        <div className="relative z-10 lg:pl-10">
-          <p className="latin-display text-xl tracking-[.22em] text-gold">TOUCH FURNITURE</p>
-          <h1 className="mt-5 max-w-xl text-balance text-4xl font-extrabold leading-[1.22] sm:text-6xl">
-            أثاث له حضور، وبيت يشبهك.
-          </h1>
-          <p className="mt-5 max-w-lg text-base font-medium leading-8 text-muted sm:mt-6 sm:text-lg sm:leading-9">
-            تصفّح مجموعاتنا ككتالوج مفتوح؛ تفاصيل هادئة، خامات عملية، واختيارات مرتبة لتصل إلى غرفتك بسهولة.
-          </p>
-          <Link
-            href="#collections"
-            className="focus-ring mt-8 inline-flex items-center gap-4 rounded-full border hairline bg-paper/65 px-7 py-3.5 font-bold transition hover:border-accent hover:bg-paper"
-          >
-            اكتشف المجموعات <span aria-hidden="true">←</span>
-          </Link>
-        </div>
-        <div className="relative min-h-[420px] overflow-hidden sm:min-h-[560px] lg:min-h-[640px]">
-          <Image
-            src={hero}
-            alt="مجموعة أثاث من تاتش فرنتشر"
-            fill
-            priority
-            fetchPriority="high"
-            sizes="(max-width: 1024px) 100vw, 60vw"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-          <p className="absolute bottom-6 right-6 rounded-full bg-paper/90 px-5 py-2 text-sm font-bold backdrop-blur">
-            كتالوج 2026
-          </p>
+      <section className="mx-auto max-w-[1480px] px-5 pt-6 sm:px-8 lg:px-12">
+        <div className="cover-frame">
+          <div className="relative aspect-[16/9] min-h-[220px] overflow-hidden bg-stone-200 sm:aspect-[21/8]">
+            <Image
+              src={hero}
+              alt="مجموعة أثاث من تاتش فرنتشر"
+              fill
+              priority
+              fetchPriority="high"
+              sizes="100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/25 to-transparent" />
+            <div className="absolute inset-y-0 right-0 flex max-w-md flex-col justify-center gap-3 p-6 text-right sm:p-10 lg:p-14">
+              <p className="latin-display text-xs tracking-[.28em] text-white/85 sm:text-sm">TOUCH FURNITURE</p>
+              <h1 className="text-2xl font-extrabold leading-tight text-white sm:text-4xl">
+                أثاث له حضور، وبيت يشبهك.
+              </h1>
+              <p className="hidden max-w-sm text-sm leading-7 text-white/85 sm:block">
+                تصفّح مجموعاتنا ككتالوج مفتوح؛ تفاصيل هادئة واختيارات مرتبة.
+              </p>
+              <Link
+                href="#collections"
+                className="focus-ring mt-1 inline-flex w-fit items-center gap-3 rounded-full bg-paper/95 px-5 py-2.5 text-sm font-bold text-ink transition hover:bg-paper"
+              >
+                اكتشف المجموعات <span aria-hidden="true">←</span>
+              </Link>
+            </div>
+            <p className="absolute bottom-4 left-4 rounded-full bg-paper/90 px-4 py-1.5 text-xs font-bold backdrop-blur">
+              كتالوج 2026
+            </p>
+          </div>
         </div>
       </section>
 

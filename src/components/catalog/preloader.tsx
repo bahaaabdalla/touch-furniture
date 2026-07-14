@@ -23,7 +23,7 @@ export function Preloader({ nameEn = "TOUCH FURNITURE" }: { nameEn?: string }) {
     }
     sessionStorage.setItem(KEY, "1");
 
-    const hold = prefersReduce ? 200 : 1150;
+    const hold = prefersReduce ? 200 : 2150;
     const timer = window.setTimeout(() => setVisible(false), hold);
     return () => window.clearTimeout(timer);
   }, []);
