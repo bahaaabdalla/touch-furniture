@@ -27,21 +27,29 @@ export default async function RoomPage({ params }: { params: Promise<{ slug: str
   if (!room) notFound();
   return (
     <CatalogFrame activity={activity}>
-      <section className="mx-auto max-w-[1480px] px-5 pb-16 pt-8 sm:px-8 lg:px-12">
+      <section className="mx-auto max-w-[1480px] px-5 pb-28 pt-8 sm:px-8 sm:pb-16 lg:px-12">
         <Link href={room.collection ? `/collections/${room.collection.slug}` : "/"} className="focus-ring text-sm text-muted hover:text-ink">العودة إلى {room.collection?.nameAr ?? "الكتالوج"}</Link>
-        <div className="mt-9 grid gap-12 lg:grid-cols-[1.35fr_.65fr] lg:items-start">
+        <div className="mt-6 grid gap-8 sm:mt-9 lg:grid-cols-[1.35fr_.65fr] lg:items-start lg:gap-12">
           <RoomGallery images={[room.coverUrl, ...room.galleryUrls]} name={room.nameAr} />
           <aside className="lg:sticky lg:top-8">
-            <p className="latin-display text-xl text-gold">{room.collection?.nameEn ?? "Touch Collection"}</p>
-            <h1 className="kufi-display mt-3 text-5xl leading-tight sm:text-6xl">{room.nameAr}</h1>
-            <p className="mt-6 text-2xl font-medium text-accent">{formatPrice(room.price, room.currency)}</p>
-            <div className="mt-6"><StockStatus stock={room.stock} /></div>
-            <div className="mt-9 border-y hairline py-8"><p className="whitespace-pre-line text-lg leading-9 text-muted">{room.descriptionAr}</p></div>
-            <div className="mt-8 flex flex-wrap items-center gap-4"><WhatsAppButton number={activity.settings.whatsappNumber} /><FavoriteButton roomId={room.id} /></div>
-            <p className="mt-5 text-xs leading-6 text-muted">سيرسل واتساب رابط هذه الغرفة مباشرة حتى يسهل الرجوع إليها.</p>
+            <p className="latin-display text-lg text-gold sm:text-xl">{room.collection?.nameEn ?? "Touch Collection"}</p>
+            <h1 className="kufi-display mt-2 text-3xl leading-tight sm:mt-3 sm:text-6xl">{room.nameAr}</h1>
+            <p className="mt-5 text-2xl font-medium text-accent sm:mt-6">{formatPrice(room.price, room.currency)}</p>
+            <div className="mt-5 sm:mt-6"><StockStatus stock={room.stock} /></div>
+            <div className="mt-7 border-y hairline py-7 sm:mt-9 sm:py-8"><p className="whitespace-pre-line text-base leading-8 text-muted sm:text-lg sm:leading-9">{room.descriptionAr}</p></div>
+            <div className="mt-7 hidden flex-wrap items-center gap-4 sm:mt-8 sm:flex"><WhatsAppButton number={activity.settings.whatsappNumber} /><FavoriteButton roomId={room.id} /></div>
+            <p className="mt-5 hidden text-xs leading-6 text-muted sm:block">سيرسل واتساب رابط هذه الغرفة مباشرة حتى يسهل الرجوع إليها.</p>
           </aside>
         </div>
       </section>
+
+      {/* Mobile: always-reachable inquiry bar */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t hairline bg-ivory/95 px-4 py-3 backdrop-blur sm:hidden">
+        <div className="flex items-center gap-3">
+          <FavoriteButton roomId={room.id} />
+          <WhatsAppButton number={activity.settings.whatsappNumber} className="flex-1" />
+        </div>
+      </div>
     </CatalogFrame>
   );
 }

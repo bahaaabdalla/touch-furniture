@@ -27,6 +27,24 @@ async function removeUrls(supabase: Awaited<ReturnType<typeof createServerSupaba
   if (paths.length) await supabase.storage.from("catalog-images").remove(paths);
 }
 
+// Next order number = highest existing order within the group + 1 (e.g. a section
+// with 3 rooms → new room defaults to 4).
+async function nextSortOrder(
+  supabase: Awaited<ReturnType<typeof createServerSupabaseClient>>,
+  table: "rooms" | "collections",
+  filterColumn: string,
+  filterValue: string,
+) {
+  const { data } = await supabase
+    .from(table)
+    .select("sort_order")
+    .eq(filterColumn, filterValue)
+    .order("sort_order", { ascending: false })
+    .limit(1);
+  const max = (data?.[0]?.sort_order as number | undefined) ?? 0;
+  return max + 1;
+}
+
 export async function loginAction(formData: FormData) {
   const parsed = loginSchema.safeParse({ email: stringValue(formData, "email"), password: stringValue(formData, "password") });
   if (!parsed.success) fail("/admin/login", "تحقق من البريد وكلمة المرور.");
@@ -45,7 +63,7 @@ export async function logoutAction() {
   redirect("/admin/login");
 }
 
-export async function processRawImage(rawPath: string, target: ImageTarget) {
+export async function processRawImage(rawPath: string, target: ImageTarget, applyWatermark = true) {
   const { supabase, claims } = await requireAdmin();
   if (!(["collections", "rooms", "logo"] as const).includes(target)) throw new Error("نوع صورة غير صالح.");
   if (!rawPath.startsWith(`${claims.sub}/`) || rawPath.includes("..")) throw new Error("مسار الرفع غير صالح.");
@@ -66,7 +84,7 @@ export async function processRawImage(rawPath: string, target: ImageTarget) {
       extension = "png";
       contentType = "image/png";
     } else {
-      output = await processCatalogImage(input);
+      output = await processCatalogImage(input, applyWatermark);
       extension = "webp";
       contentType = "image/webp";
     }
@@ -107,6 +125,9 @@ export async function saveCollection(formData: FormData) {
 
   const { supabase } = await requireAdmin();
   const activityId = await getActivityId();
+  const sortOrder = id
+    ? parsed.data.sortOrder ?? 0
+    : await nextSortOrder(supabase, "collections", "activity_id", activityId);
   const payload = {
     activity_id: activityId,
     slug: parsed.data.slug,
@@ -114,7 +135,7 @@ export async function saveCollection(formData: FormData) {
     name_en: parsed.data.nameEn,
     description_ar: parsed.data.descriptionAr,
     cover_url: parsed.data.coverUrl,
-    sort_order: parsed.data.sortOrder,
+    sort_order: sortOrder,
     is_published: parsed.data.isPublished,
   };
   let oldCover = "";
@@ -170,6 +191,9 @@ export async function saveRoom(formData: FormData) {
   });
   if (!parsed.success) fail(destination, parsed.error.issues[0]?.message ?? "بيانات غير صالحة.");
   const { supabase } = await requireAdmin();
+  const sortOrder = id
+    ? parsed.data.sortOrder ?? 0
+    : await nextSortOrder(supabase, "rooms", "collection_id", parsed.data.collectionId);
   const payload = {
     collection_id: parsed.data.collectionId,
     slug: parsed.data.slug,
@@ -180,7 +204,7 @@ export async function saveRoom(formData: FormData) {
     stock: parsed.data.stock,
     cover_url: parsed.data.coverUrl,
     gallery_urls: parsed.data.galleryUrls,
-    sort_order: parsed.data.sortOrder,
+    sort_order: sortOrder,
     is_published: parsed.data.isPublished,
   };
   let oldUrls: string[] = [];

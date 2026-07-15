@@ -24,7 +24,9 @@ export function RoomForm({ collections, value = {} }: { collections: CollectionO
       <ImageUploadField name="cover_url" label="صورة الغلاف" target="rooms" initial={value.cover_url ? [value.cover_url] : []} />
       <ImageUploadField name="gallery_urls" label="صور المعرض — حتى 12 صورة" target="rooms" initial={value.gallery_urls ?? []} multiple />
       <div className="grid items-end gap-6 sm:grid-cols-2">
-        <label className="space-y-2"><span className="text-sm font-medium">الترتيب</span><input className={input} type="number" name="sort_order" defaultValue={value.sort_order ?? 0} min={0} required /></label>
+        {value.id ? (
+          <label className="space-y-2"><span className="text-sm font-medium">الترتيب</span><input className={input} type="number" name="sort_order" defaultValue={value.sort_order ?? 0} min={0} /></label>
+        ) : null}
         <label className="flex items-center gap-3 rounded-xl border hairline bg-white px-4 py-3"><input type="checkbox" name="is_published" defaultChecked={value.is_published ?? true} className="h-5 w-5 accent-[var(--accent-primary)]" /> منشورة</label>
       </div>
       <div className="flex gap-3 border-t hairline pt-6"><button className="rounded-full bg-ink px-7 py-3 text-white">حفظ الغرفة</button><Link href="/admin/rooms" className="rounded-full border hairline px-7 py-3">إلغاء</Link></div>

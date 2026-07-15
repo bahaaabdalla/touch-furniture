@@ -13,7 +13,7 @@ export const collectionSchema = z.object({
   nameEn: z.string().trim().min(2).max(120),
   descriptionAr: z.string().trim().min(4).max(1200),
   coverUrl: optionalUrl,
-  sortOrder: z.coerce.number().int().min(0).max(10000),
+  sortOrder: z.coerce.number().int().min(0).max(10000).optional(),
   isPublished: z.boolean(),
 });
 
@@ -28,7 +28,7 @@ export const roomSchema = z.object({
   stock: z.coerce.number().int().min(0).max(1_000_000),
   coverUrl: optionalUrl,
   galleryUrls: z.array(optionalUrl).max(12),
-  sortOrder: z.coerce.number().int().min(0).max(10000),
+  sortOrder: z.coerce.number().int().min(0).max(10000).optional(),
   isPublished: z.boolean(),
 });
 

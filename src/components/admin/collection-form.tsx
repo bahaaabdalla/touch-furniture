@@ -17,7 +17,9 @@ export function CollectionForm({ value = {} }: { value?: CollectionValue }) {
       <label className="block space-y-2"><span className="text-sm font-medium">الوصف</span><textarea className={`${input} min-h-32 resize-y`} name="description_ar" defaultValue={value.description_ar} required maxLength={1200} /></label>
       <ImageUploadField name="cover_url" label="صورة الغلاف" target="collections" initial={value.cover_url ? [value.cover_url] : []} />
       <div className="grid items-end gap-6 sm:grid-cols-2">
-        <label className="space-y-2"><span className="text-sm font-medium">الترتيب</span><input className={input} type="number" name="sort_order" defaultValue={value.sort_order ?? 0} min={0} required /></label>
+        {value.id ? (
+          <label className="space-y-2"><span className="text-sm font-medium">الترتيب</span><input className={input} type="number" name="sort_order" defaultValue={value.sort_order ?? 0} min={0} /></label>
+        ) : null}
         <label className="flex items-center gap-3 rounded-xl border hairline bg-white px-4 py-3"><input type="checkbox" name="is_published" defaultChecked={value.is_published ?? true} className="h-5 w-5 accent-[var(--accent-primary)]" /> منشورة</label>
       </div>
       <div className="flex gap-3 border-t hairline pt-6"><button className="rounded-full bg-ink px-7 py-3 text-white">حفظ المجموعة</button><Link href="/admin/collections" className="rounded-full border hairline px-7 py-3">إلغاء</Link></div>
