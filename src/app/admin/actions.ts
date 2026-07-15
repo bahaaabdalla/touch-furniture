@@ -77,7 +77,10 @@ export async function processRawImage(rawPath: string, target: ImageTarget) {
       contentType,
       upsert: false,
     });
-    if (uploadError) throw new Error("تعذر حفظ الصورة المعالجة.");
+    if (uploadError) {
+      console.error("catalog-images upload failed", { objectPath, contentType, size: output.byteLength, error: uploadError });
+      throw new Error(`تعذر حفظ الصورة المعالجة: ${uploadError.message ?? "unknown"}`);
+    }
     return supabase.storage.from("catalog-images").getPublicUrl(objectPath).data.publicUrl;
   } finally {
     await supabase.storage.from("catalog-raw").remove([rawPath]);
