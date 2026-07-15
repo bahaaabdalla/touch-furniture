@@ -21,5 +21,8 @@ export const demoRepository: CatalogRepository = {
   async getRoomBySlug(slug) {
     return demoRooms.find((item) => item.slug === slug) ?? null;
   },
+  async getAllRooms() {
+    return [...demoRooms].sort((a, b) => a.sortOrder - b.sortOrder);
+  },
 };
 

@@ -62,8 +62,8 @@ export function CatalogSpread({ rooms }: { rooms: Room[] }) {
                 />
               </div>
               <div className="flex items-start justify-between gap-3 pt-3 sm:gap-5 sm:pt-6">
-                <div>
-                  <h2 className="text-lg font-medium leading-snug sm:text-3xl">{room.nameAr}</h2>
+                <div className="min-w-0">
+                  <h2 className="break-words text-lg font-medium leading-snug sm:text-3xl">{room.nameAr}</h2>
                   <p className="latin-display mt-0.5 text-sm text-muted sm:mt-1 sm:text-lg">No. {String(index + 1).padStart(2, "0")}</p>
                 </div>
                 <p className="whitespace-nowrap text-base font-bold text-accent sm:text-lg sm:font-medium">{formatPrice(room.price, room.currency)}</p>

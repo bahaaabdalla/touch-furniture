@@ -39,7 +39,13 @@ export async function CatalogFrame({
             </span>
           </Link>
 
-          <div className="flex items-center gap-4 text-left">
+          <div className="flex items-center gap-2.5 text-left sm:gap-4">
+            <Link href="/search" aria-label="بحث" className="focus-ring grid h-9 w-9 place-items-center rounded-full border hairline text-ink transition hover:border-accent hover:text-accent">
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" /></svg>
+            </Link>
+            <Link href="/favorites" aria-label="المفضلة" className="focus-ring grid h-9 w-9 place-items-center rounded-full border hairline text-ink transition hover:border-accent hover:text-accent">
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" /></svg>
+            </Link>
             <a
               href={`tel:+${activity.settings.whatsappNumber}`}
               className="focus-ring inline-flex items-center gap-1.5 rounded-sm text-[.8rem] font-bold text-ink transition-colors hover:text-accent sm:text-sm"

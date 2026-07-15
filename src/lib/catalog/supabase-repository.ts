@@ -145,5 +145,15 @@ export class SupabaseCatalogRepository implements CatalogRepository {
     if (error) throw new Error("تعذر تحميل الغرفة.");
     return data ? mapRoom(data as JsonRecord) : null;
   }
+
+  async getAllRooms() {
+    const { data, error } = await publicClient()
+      .from("rooms")
+      .select("*, collections(id, slug, name_ar, name_en)")
+      .eq("is_published", true)
+      .order("sort_order");
+    if (error) throw new Error("تعذر تحميل الغرف.");
+    return (data ?? []).map((row) => mapRoom(row as JsonRecord));
+  }
 }
 

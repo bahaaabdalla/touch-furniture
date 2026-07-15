@@ -56,5 +56,6 @@ export interface CatalogRepository {
   getCollections(): Promise<Collection[]>;
   getCollectionBySlug(slug: string): Promise<CollectionWithRooms | null>;
   getRoomBySlug(slug: string): Promise<Room | null>;
+  getAllRooms(): Promise<Room[]>;
 }
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CatalogFrame } from "@/components/catalog/catalog-frame";
 import { FavoriteButton } from "@/components/catalog/favorite-button";
+import { RecordView } from "@/components/catalog/record-view";
 import { RoomGallery } from "@/components/catalog/room-gallery";
 import { StockStatus } from "@/components/catalog/stock-status";
 import { WhatsAppButton } from "@/components/catalog/whatsapp-button";
@@ -27,13 +28,14 @@ export default async function RoomPage({ params }: { params: Promise<{ slug: str
   if (!room) notFound();
   return (
     <CatalogFrame activity={activity}>
+      <RecordView id={room.id} slug={room.slug} nameAr={room.nameAr} coverUrl={room.coverUrl} price={room.price} currency={room.currency} />
       <section className="mx-auto max-w-[1480px] px-5 pb-28 pt-8 sm:px-8 sm:pb-16 lg:px-12">
         <Link href={room.collection ? `/collections/${room.collection.slug}` : "/"} className="focus-ring text-sm text-muted hover:text-ink">العودة إلى {room.collection?.nameAr ?? "الكتالوج"}</Link>
-        <div className="mt-6 grid gap-8 sm:mt-9 lg:grid-cols-[1.35fr_.65fr] lg:items-start lg:gap-12">
-          <RoomGallery images={[room.coverUrl, ...room.galleryUrls]} name={room.nameAr} />
-          <aside className="lg:sticky lg:top-8">
+        <div className="mt-6 grid grid-cols-1 gap-8 sm:mt-9 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.65fr)] lg:items-start lg:gap-12">
+          <div className="min-w-0"><RoomGallery images={[room.coverUrl, ...room.galleryUrls]} name={room.nameAr} /></div>
+          <aside className="min-w-0 lg:sticky lg:top-8">
             <p className="latin-display text-lg text-gold sm:text-xl">{room.collection?.nameEn ?? "Touch Collection"}</p>
-            <h1 className="kufi-display mt-2 text-3xl leading-tight sm:mt-3 sm:text-6xl">{room.nameAr}</h1>
+            <h1 className="kufi-display mt-2 text-balance break-words text-3xl leading-tight sm:mt-3 sm:text-6xl">{room.nameAr}</h1>
             <p className="mt-5 text-2xl font-medium text-accent sm:mt-6">{formatPrice(room.price, room.currency)}</p>
             <div className="mt-5 sm:mt-6"><StockStatus stock={room.stock} /></div>
             <div className="mt-7 border-y hairline py-7 sm:mt-9 sm:py-8"><p className="whitespace-pre-line text-base leading-8 text-muted sm:text-lg sm:leading-9">{room.descriptionAr}</p></div>
