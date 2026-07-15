@@ -72,7 +72,10 @@ export async function processRawImage(rawPath: string, target: ImageTarget) {
     }
 
     const objectPath = `${activityId}/${target}/${randomUUID()}.${extension}`;
-    const { error: uploadError } = await supabase.storage.from("catalog-images").upload(objectPath, output, {
+    // Sharp can return a Buffer backed by shared memory; the fetch layer rejects
+    // that ("SharedArrayBuffer is not allowed"). Upload a plain Blob copy instead.
+    const body = new Blob([new Uint8Array(output)], { type: contentType });
+    const { error: uploadError } = await supabase.storage.from("catalog-images").upload(objectPath, body, {
       cacheControl: "31536000",
       contentType,
       upsert: false,
