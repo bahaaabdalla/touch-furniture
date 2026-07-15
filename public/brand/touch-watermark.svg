@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <defs>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="blur"/>
+      <feOffset dy="2" result="offset"/>
+      <feColorMatrix in="offset" type="matrix"
+        values="0 0 0 0 0.12  0 0 0 0 0.08  0 0 0 0 0.05  0 0 0 .45 0" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Large central protection mark: intentionally spans the product itself. -->
+  <g text-anchor="middle" font-family="DejaVu Sans, sans-serif" filter="url(#softShadow)">
+    <circle cx="800" cy="555" r="138" fill="none" stroke="#ffffff" stroke-width="7" opacity="0.13"/>
+    <circle cx="800" cy="555" r="121" fill="none" stroke="#b9914c" stroke-width="3" opacity="0.22"/>
+    <text x="800" y="578" font-size="132" font-weight="700" letter-spacing="7"
+      fill="#ffffff" fill-opacity="0.13" stroke="#3b2b21" stroke-opacity="0.20" stroke-width="2.5"
+      paint-order="stroke fill">TOUCH</text>
+    <text x="800" y="643" font-size="49" font-weight="700" direction="rtl" unicode-bidi="bidi-override"
+      fill="#ffffff" fill-opacity="0.18" stroke="#3b2b21" stroke-opacity="0.18" stroke-width="1.5"
+      paint-order="stroke fill">تاتش فرنتشر</text>
+    <line x1="555" y1="672" x2="695" y2="672" stroke="#b9914c" stroke-width="3" opacity="0.28"/>
+    <line x1="905" y1="672" x2="1045" y2="672" stroke="#b9914c" stroke-width="3" opacity="0.28"/>
+    <text x="800" y="684" font-size="27" font-weight="600" letter-spacing="11"
+      fill="#ffffff" fill-opacity="0.22" stroke="#3b2b21" stroke-opacity="0.15" stroke-width="1"
+      paint-order="stroke fill">FURNITURE</text>
+  </g>
+
+  <!-- Compact brand seal, matching the reference placement. -->
+  <g transform="translate(70 1040)" filter="url(#softShadow)">
+    <text x="0" y="58" font-family="DejaVu Sans, sans-serif" font-size="34" font-weight="700"
+      fill="#3b2b21" stroke="#ffffff" stroke-opacity="0.58" stroke-width="3" paint-order="stroke fill">TOUCH</text>
+    <text x="0" y="96" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="600" letter-spacing="5"
+      fill="#3b2b21" stroke="#ffffff" stroke-opacity="0.58" stroke-width="2.5" paint-order="stroke fill">FURNITURE</text>
+  </g>
+
+  <!-- Contact information, matching the reference placement. -->
+  <g transform="translate(1082 1082)" filter="url(#softShadow)" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="0" y="0" width="450" height="82" rx="22" fill="#3b2b21" fill-opacity="0.72"
+      stroke="#d8b66b" stroke-width="2.5" stroke-opacity="0.95"/>
+    <g transform="translate(19 13) scale(.39)" fill="none">
+      <path d="M16 7c5-5 13-4 17 2l11 16c3 5 2 11-2 15l-8 7c13 23 30 39 52 51l7-9c4-5 11-6 16-2l15 11c6 4 7 12 2 17l-9 10c-8 9-21 12-32 7C44 115 17 88 4 52-1 39 2 25 11 16z"
+        stroke="#d8b66b" stroke-width="8"/>
+    </g>
+    <text x="82" y="55" font-family="DejaVu Sans, sans-serif" font-size="38" font-weight="700" letter-spacing="2"
+      fill="#ffffff">01145085454</text>
+  </g>
+</svg>

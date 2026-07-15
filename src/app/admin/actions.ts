@@ -4,7 +4,7 @@ import { randomUUID } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { publicStoragePath } from "@/lib/catalog/format";
-import { defaultLogoBuffer, IMAGE_MIME_TYPES, processCatalogImage, processLogoImage } from "@/lib/images/pipeline";
+import { IMAGE_MIME_TYPES, processCatalogImage, processLogoImage } from "@/lib/images/pipeline";
 import { requireAdmin } from "@/lib/supabase/auth";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { checkbox, collectionSchema, loginSchema, roomSchema, settingsSchema, stringValue } from "@/lib/validation/admin";
@@ -66,14 +66,7 @@ export async function processRawImage(rawPath: string, target: ImageTarget) {
       extension = "png";
       contentType = "image/png";
     } else {
-      const { data: activity } = await supabase.from("activities").select("logo_url").eq("id", activityId).single();
-      const logoUrl = String(activity?.logo_url ?? "");
-      let logo = await defaultLogoBuffer();
-      if (logoUrl.startsWith("https://")) {
-        const response = await fetch(logoUrl, { cache: "no-store" });
-        if (response.ok) logo = Buffer.from(await response.arrayBuffer());
-      }
-      output = await processCatalogImage(input, logo);
+      output = await processCatalogImage(input);
       extension = "webp";
       contentType = "image/webp";
     }

@@ -22,7 +22,9 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; background: var(--ivory); }
+/* No global smooth-scroll: it makes Next's scroll-to-top animate on every
+   route change, which feels like a jolt. Navigation is now instant/clean. */
+html { background: var(--ivory); }
 html, body { overflow-x: clip; max-width: 100%; }
 body {
   margin: 0;
