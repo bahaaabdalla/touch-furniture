@@ -39,6 +39,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# watermark render artifacts (kept locally, not deployed)
+/public/brand/wm_*.png
+/public/brand/_*.png
+/public/brand/touch-watermark-render.svg
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
